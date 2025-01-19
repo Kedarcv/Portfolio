@@ -283,21 +283,21 @@ scene.add(pointLight4);
 // scene.add(pointLightHelper);
 
 // ADD GUI
-// const gui = new dat.GUI();
-// const options = {
-//   lightX: 0,
-//   lightY: 0.08,
-//   lightZ: 0,
-// };
-// gui.add(options, 'lightX').onChange((e) => {
-//   mobileLight.position.setX(e);
-// });
-// gui.add(options, 'lightY').onChange((e) => {
-//   mobileLight.position.setY(e);
-// });
-// gui.add(options, 'lightZ').onChange((e) => {
-//   mobileLight.position.setZ(e);
-// });
+ const gui = new dat.GUI();
+ const options = {
+   lightX: 0,
+   lightY: 0.08,
+   lightZ: 0,
+ };
+ gui.add(options, 'lightX').onChange((e) => {
+   mobileLight.position.setX(e);
+ });
+ gui.add(options, 'lightY').onChange((e) => {
+   mobileLight.position.setY(e);
+ });
+ gui.add(options, 'lightZ').onChange((e) => {
+   mobileLight.position.setZ(e);
+});
 
 const clock = new THREE.Clock();
 function animate() {
