@@ -283,21 +283,21 @@ scene.add(pointLight4);
 // scene.add(pointLightHelper);
 
 // ADD GUI
- const gui = new dat.GUI();
- const options = {
-   lightX: 0,
-   lightY: 0.08,
-   lightZ: 0,
- };
- gui.add(options, 'lightX').onChange((e) => {
-   mobileLight.position.setX(e);
- });
- gui.add(options, 'lightY').onChange((e) => {
-   mobileLight.position.setY(e);
- });
- gui.add(options, 'lightZ').onChange((e) => {
-   mobileLight.position.setZ(e);
-});
+//const gui = new dat.GUI();
+ //const options = {
+   //lightX: 0,
+   //lightY: 0.08,
+   //lightZ: 0,
+ //};
+ //gui.add(options, 'lightX').onChange((e) => {
+   //mobileLight.position.setX(e);
+ //});
+ //gui.add(options, 'lightY').onChange((e) => {
+   //mobileLight.position.setY(e);
+ //});
+ //gui.add(options, 'lightZ').onChange((e) => {
+  // mobileLight.position.setZ(e);
+//});
 
 const clock = new THREE.Clock();
 function animate() {
@@ -774,6 +774,45 @@ document.addEventListener('mouseup', (e) => {
       .classList.remove('contact-menu__dropdown--open');
   }
 });
+document.addEventListener('DOMContentLoaded', () => {
+  const resumeButton = document.getElementById('.resume-menu');
+  if (resumeButton) {
+      resumeButton.addEventListener('click', () => {
+          const cvUrl = 'https://drive.google.com/file/d/1dRDt_kGYq4Xd6dVTjAceL_TMkmQa5Yw7/view?usp=drive_link';
+          window.open(cvUrl, '_blank');
+      });
+  }
+  const playGameButton = document.querySelector('.play-game-link');
+  if (playGameButton) {
+      playGameButton.addEventListener('click', () => {
+          startGame();
+      });
+  }
+});
+
+function startGame() {
+  const choices = ['Rock', 'Paper', 'Scissors'];
+  const userChoice = prompt('Enter Rock, Paper, or Scissors:');
+  if (!choices.includes(userChoice)) {
+      alert('Invalid choice! Please enter Rock, Paper, or Scissors.');
+      return;
+  }
+
+  const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+  alert(`Computer chose: ${computerChoice}`);
+
+  if (userChoice === computerChoice) {
+      alert('It\'s a tie!');
+  } else if (
+      (userChoice === 'Rock' && computerChoice === 'Scissors') ||
+      (userChoice === 'Paper' && computerChoice === 'Rock') ||
+      (userChoice === 'Scissors' && computerChoice === 'Paper')
+  ) {
+      alert('You win!');
+  } else {
+      alert('You lose!');
+  }
+};
 
 // update camera, renderer on resize
 window.addEventListener('resize', () => {
@@ -781,3 +820,4 @@ window.addEventListener('resize', () => {
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
+//https://drive.google.com/file/d/1dRDt_kGYq4Xd6dVTjAceL_TMkmQa5Yw7/view?usp=drive_link
