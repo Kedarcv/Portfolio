@@ -2,6 +2,7 @@ import './style.css';
 import * as THREE from 'three';
 import * as dat from 'dat.gui';
 import gsap from 'gsap';
+import html2canvas from 'html2canvas';
 import Stats from 'three/addons/libs/stats.module.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -28,20 +29,20 @@ let clipNames = [
 ];
 let projects = [
   {
-    image: 'textures/project-spaze.webp',
-    url: 'https://www.spaze.social/',
+    image: 'textures/ISC2.png',
+    url: 'https://coursera.org/share/28699a690714c18a08dcb99361593262',
   },
   {
-    image: 'textures/project-myteachers.jpg',
-    url: 'https://myteachers.com.au/',
+    image: 'textures/Google CyberSecurity Certification.png',
+    url: 'https://coursera.org/share/579e46553bb42e0bdf08d14b411acd70',
   },
   {
-    image: 'textures/project-wholesale.jpg',
-    url: 'https://wholesale.com.np/',
+    image: 'textures/mike.jpeg',
+    url: 'https://gdg.community.dev/gdg-on-campus-midlands-state-university-gweru-zimbabwe/',
   },
   {
-    image: 'textures/project-pelotero.jpg',
-    url: 'https://www.peloterosenlaweb.com/',
+    image: 'textures/IMG_1171.JPG',
+    url: '#',
   },
 ];
 let aboutCameraPos = {
@@ -182,22 +183,143 @@ gltfLoader.load(
         child.children[1].material.depthTest = false;
       }
 
-      if (child.name === 'Book') {  
-        bookCover = child.children[0];  
-    
-        // Create an iframe to display HTML  
-        const iframe = document.createElement('iframe');  
-        iframe.src = 'textures/book.html'; // Path to your HTML content  
-        iframe.style.width = '100%'; // Set the width of the iframe  
-        iframe.style.height = '100%'; // Set the height of the iframe  
-        iframe.style.border = 'none'; // Optional: remove iframe border  
-    
-        // Append the iframe to the book cover  
-        bookCover.appendChild(iframe);  
-    }  
-    
-    scene.add(room.scene);  
-    animate();  
+      if (child.name === 'Book') {
+        bookCover = child.children[0];
+            
+        // Create div for HTML content
+        const aboutContent = document.createElement('div');
+        aboutContent.id = 'book-content';
+        aboutContent.innerHTML = `
+          <div class="book-inner-content">
+            <div class="header">
+              <h1>Bro <span>Code</span></h1>
+            </div>
+      
+            <div class="profile-pic"></div>
+      
+            <div class="content">
+              <h2>Michael Mlungisi Nkomo</h2>
+              <p>Michael Mlungisi Nkomo is an aspiring Data Analyst</p>
+              <p>and Information Security Analyst with a passion for</p>
+              <p>transforming data into actionable insights, proficient</p>
+              <p>in tools like Python, Dart, SQL, MATLAB, JS, React, and C#,</p>
+              <p>with exceptional experience in developing innovative projects</p>
+              <p>such as KedarAI, Funda-Africa, and Zim-Xpress.</p>
+              <p>I am currently at Midlands State University pursuing my Bachelors
+              Honours degree in Computer Science.</p>
+              <p>Additionally, I am the founder of BroCode Zimbabwe. 
+              Reach out if you have any questions or collaboration ideas!</p>
+            </div>
+      
+            <div class="footer">
+              <p>Created by <strong>Michael Mlungisi Nkomo</strong> | 
+              <a href="mailto:cvlised360@gmail.com">Contact Me</a></p>
+            </div>
+          </div>
+        `;
+      
+        // Add styles for the content
+        const style = document.createElement('style');
+        style.textContent = `
+          #book-content {
+            background-color: #121212;
+            color: #ffffff;
+            width: 300px;
+            height: 400px;
+            padding: 20px;
+            overflow-y: auto;
+            font-family: Arial, sans-serif;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            z-index: 1000;
+          }
+          .book-inner-content {
+            text-align: center;
+          }
+          .header {
+            background-color: #1c1c1c;
+            padding: 10px;
+          }
+          .header h1 {
+            font-size: 1.5em;
+            margin: 0;
+            color: #00ff00;
+          }
+          .header span {
+            color: #ffcc00;
+          }
+          .profile-pic {
+            margin: 15px auto;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid #00ff00;
+            background-image: url('textures/me.jpg');
+            background-size: cover;
+            background-position: center;
+          }
+          .content {
+            line-height: 1.4;
+          }
+          .content h2 {
+            color: #00ff00;
+            font-size: 1.2em;
+          }
+          .content p {
+            margin: 8px 0;
+            font-size: 0.9em;
+          }
+          .footer {
+            margin-top: 15px;
+            background-color: #1c1c1c;
+            padding: 8px;
+            font-size: 0.8em;
+          }
+          .footer a {
+            color: #ffcc00;
+            text-decoration: none;
+          }
+          #book-content::-webkit-scrollbar {
+            width: 6px;
+          }
+          #book-content::-webkit-scrollbar-track {
+            background: #1c1c1c;
+          }
+          #book-content::-webkit-scrollbar-thumb {
+            background: #00ff00;
+            border-radius: 3px;
+          }
+        `;
+      
+        document.head.appendChild(style);
+        document.body.appendChild(aboutContent);
+      
+        // Show content when about is clicked
+        document.getElementById('about-menu').addEventListener('click', () => {
+          setTimeout(() => {
+            aboutContent.style.display = 'block';
+          }, 1500);
+        });
+      
+        // Hide content when close button is clicked
+        document.getElementById('close-btn').addEventListener('click', () => {
+          aboutContent.style.display = 'none';
+        });
+      
+      }
+          
+      
+      
+      if (child.name === 'SwitchBoard') {
+        lightSwitch = child.children[0];
+      }
+    });
+
+    scene.add(room.scene);
+    animate();
 
     // add animation
     mixer = new THREE.AnimationMixer(room.scene);
@@ -329,7 +451,7 @@ function loadIntroText() {
       new THREE.MeshPhongMaterial({ color: 0xffffff }),
     ];
     const subTitleGeo = new TextGeometry(
-      'Web Designer / Developer / Security Analyst',
+      'Web Developer / Software Engineer / Security Analyst',
       {
         font: font,
         size: 0.018,
@@ -815,4 +937,3 @@ window.addEventListener('resize', () => {
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
-  });

@@ -103,3 +103,51 @@
   </div>
 </body>
 </html>
+if (child.name === 'Book') {
+  bookCover = child.children[0];
+
+  // Create canvas to render HTML
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = 1024;
+  canvas.height = 1024;
+
+  // Create temporary div with content
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = `
+    <div class="header">
+      <h1>Bro <span>Code</span></h1>
+    </div>
+
+    <div class="profile-pic"></div>
+
+    <div class="content">
+      <h2>Michael Mlungisi Nkomo</h2>
+      <p>Michael Mlungisi Nkomo is an aspiring Data Analyst</p>
+      <p>and Information Security Analyst with a passion for</p>
+      <p>transforming data into actionable insights, proficient</p>
+      <p>in tools like Python, Dart, SQL, MATLAB, JS, React, and C#,</p>
+      <p>with exceptional experience in developing innovative projects</p>
+      <p>such as KedarAI, Funda-Africa, and Zim-Xpress.</p>
+      <p>I am currently at Midlands State University pursuing my Bachelors
+      Honours degree in Computer Science.</p>
+      <p>Additionally, I am the founder of BroCode Zimbabwe. 
+      Reach out if you have any questions or collaboration ideas!</p>
+    </div>
+  `;
+
+  // Convert HTML to image
+  html2canvas(tempDiv).then(renderedCanvas => {
+    ctx.drawImage(renderedCanvas, 0, 0);
+    
+    // Create texture from canvas
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.flipY = false;
+    
+    // Apply texture to book material
+    child.material = new THREE.MeshStandardMaterial({
+      color: 0xffffff,
+      map: texture
+    });
+  });
+}
