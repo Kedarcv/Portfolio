@@ -182,27 +182,22 @@ gltfLoader.load(
         child.children[1].material.depthTest = false;
       }
 
-      if (child.name === 'Book') {
-        bookCover = child.children[0];
-
-        // adding texture to book
-        const bookTexture = new THREE.TextureLoader().load(
-          'textures/book-inner.jpg'
-        );
-        bookTexture.flipY = false;
-        child.material = new THREE.MeshStandardMaterial({
-          color: 0xffffff,
-          map: bookTexture,
-        });
-      }
-
-      if (child.name === 'SwitchBoard') {
-        lightSwitch = child.children[0];
-      }
-    });
-
-    scene.add(room.scene);
-    animate();
+      if (child.name === 'Book') {  
+        bookCover = child.children[0];  
+    
+        // Create an iframe to display HTML  
+        const iframe = document.createElement('iframe');  
+        iframe.src = 'textures/book.html'; // Path to your HTML content  
+        iframe.style.width = '100%'; // Set the width of the iframe  
+        iframe.style.height = '100%'; // Set the height of the iframe  
+        iframe.style.border = 'none'; // Optional: remove iframe border  
+    
+        // Append the iframe to the book cover  
+        bookCover.appendChild(iframe);  
+    }  
+    
+    scene.add(room.scene);  
+    animate();  
 
     // add animation
     mixer = new THREE.AnimationMixer(room.scene);
@@ -820,4 +815,4 @@ window.addEventListener('resize', () => {
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
-//https://drive.google.com/file/d/1dRDt_kGYq4Xd6dVTjAceL_TMkmQa5Yw7/view?usp=drive_link
+  });
