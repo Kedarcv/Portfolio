@@ -33,7 +33,7 @@ let projects = [
     url: 'https://coursera.org/share/28699a690714c18a08dcb99361593262',
   },
   {
-    image: 'textures/musika.png',
+    image: 'textures/musika.PNG',
     url: 'https:musikazw.com/',
   },
   {
