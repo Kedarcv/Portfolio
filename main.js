@@ -33,6 +33,14 @@ let projects = [
     url: 'https://coursera.org/share/28699a690714c18a08dcb99361593262',
   },
   {
+    image: 'textures/musika.png',
+    url: 'https:musikazw.com/',
+  },
+  {
+    image: 'textures/msu-connect.png',
+    url: '#',
+  },
+  {
     image: 'textures/Google CyberSecurity Certification.png',
     url: 'https://coursera.org/share/579e46553bb42e0bdf08d14b411acd70',
   },
@@ -185,141 +193,59 @@ gltfLoader.load(
 
       if (child.name === 'Book') {
         bookCover = child.children[0];
-            
-        // Create div for HTML content
-        const aboutContent = document.createElement('div');
-        aboutContent.id = 'book-content';
-        aboutContent.innerHTML = `
-          <div class="book-inner-content">
-            <div class="header">
-              <h1>Bro <span>Code</span></h1>
-            </div>
-      
-            <div class="profile-pic"></div>
-      
-            <div class="content">
-              <h2>Michael Mlungisi Nkomo</h2>
-              <p>Michael Mlungisi Nkomo is an aspiring Data Analyst</p>
-              <p>and Information Security Analyst with a passion for</p>
-              <p>transforming data into actionable insights, proficient</p>
-              <p>in tools like Python, Dart, SQL, MATLAB, JS, React, and C#,</p>
-              <p>with exceptional experience in developing innovative projects</p>
-              <p>such as KedarAI, Funda-Africa, and Zim-Xpress.</p>
-              <p>I am currently at Midlands State University pursuing my Bachelors
-              Honours degree in Computer Science.</p>
-              <p>Additionally, I am the founder of BroCode Zimbabwe. 
-              Reach out if you have any questions or collaboration ideas!</p>
-            </div>
-      
-            <div class="footer">
-              <p>Created by <strong>Michael Mlungisi Nkomo</strong> | 
-              <a href="mailto:cvlised360@gmail.com">Contact Me</a></p>
-            </div>
-          </div>
-        `;
-      
-        // Add styles for the content
+        
+        // Create iframe container
+        const bookIframeContainer = document.createElement('div');
+        bookIframeContainer.id = 'book-iframe-container';
+        
+        // Add styles for the iframe container
         const style = document.createElement('style');
         style.textContent = `
-          #book-content {
-            background-color: #121212;
-            color: #ffffff;
-            width: 300px;
-            height: 400px;
-            padding: 20px;
-            overflow-y: auto;
-            font-family: Arial, sans-serif;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: none;
-            z-index: 1000;
-          }
-          .book-inner-content {
-            text-align: center;
-          }
-          .header {
-            background-color: #1c1c1c;
-            padding: 10px;
-          }
-          .header h1 {
-            font-size: 1.5em;
-            margin: 0;
-            color: #00ff00;
-          }
-          .header span {
-            color: #ffcc00;
-          }
-          .profile-pic {
-            margin: 15px auto;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: 3px solid #00ff00;
-            background-image: url('textures/me.jpg');
-            background-size: cover;
-            background-position: center;
-          }
-          .content {
-            line-height: 1.4;
-          }
-          .content h2 {
-            color: #00ff00;
-            font-size: 1.2em;
-          }
-          .content p {
-            margin: 8px 0;
-            font-size: 0.9em;
-          }
-          .footer {
-            margin-top: 15px;
-            background-color: #1c1c1c;
-            padding: 8px;
-            font-size: 0.8em;
-          }
-          .footer a {
-            color: #ffcc00;
-            text-decoration: none;
-          }
-          #book-content::-webkit-scrollbar {
-            width: 6px;
-          }
-          #book-content::-webkit-scrollbar-track {
-            background: #1c1c1c;
-          }
-          #book-content::-webkit-scrollbar-thumb {
-            background: #00ff00;
-            border-radius: 3px;
-          }
+            #book-iframe-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 1000;
+                display: none;
+            }
+            #book-iframe {
+                width: 100%;
+                height: 100%;
+                border: none;
+            }
         `;
-      
+        
+        // Create iframe
+        const bookIframe = document.createElement('iframe');
+        bookIframe.id = 'book-iframe';
+        bookIframe.src = 'textures/book.html';
+        
+        // Append elements
+        bookIframeContainer.appendChild(bookIframe);
         document.head.appendChild(style);
-        document.body.appendChild(aboutContent);
-      
-        // Show content when about is clicked
+        document.body.appendChild(bookIframeContainer);
+        
+        // Show iframe when about is clicked
         document.getElementById('about-menu').addEventListener('click', () => {
-          setTimeout(() => {
-            aboutContent.style.display = 'block';
-          }, 1500);
+            setTimeout(() => {
+                bookIframeContainer.style.display = 'block';
+            }, 1500);
         });
-      
-        // Hide content when close button is clicked
-        document.getElementById('close-btn').addEventListener('click', () => {
-          aboutContent.style.display = 'none';
+        
+        // Listen for messages from the iframe
+        window.addEventListener('message', (event) => {
+            if (event.data === 'closeBook') {
+                bookIframeContainer.style.display = 'none';
+            }
         });
-      
-      }
-          
-      
-      
-      if (child.name === 'SwitchBoard') {
+    }
+    
+    if (child.name === 'SwitchBoard') {
         lightSwitch = child.children[0];
-      }
-    });
-
-    scene.add(room.scene);
-    animate();
+    }
+    
 
     // add animation
     mixer = new THREE.AnimationMixer(room.scene);
@@ -930,7 +856,7 @@ function startGame() {
       alert('You lose!');
   }
 };
-
+  
 // update camera, renderer on resize
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;

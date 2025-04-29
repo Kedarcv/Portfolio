@@ -1,17 +1,5 @@
-# 3d-portfolio
+# 3d-portfolio for Michael Mlungisi Nkomo
 
-Personal Portfolio website designed using ThreeJS
+Personal Portfolio website designed using ThreeJS that displays my socials, about, projects and certifications.
 
-Install Dependencies
-
-```sh
-npm install
-```
-
-Start the development server
-
-```sh
-npm run dev
-```
-
-Preview: https://chimerical-sawine-e5d69e.netlify.app/
+Preview: https://wise-vault-423212-r2.web.app/
