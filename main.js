@@ -2,7 +2,6 @@ import './style.css';
 import * as THREE from 'three';
 import * as dat from 'dat.gui';
 import gsap from 'gsap';
-import html2canvas from 'html2canvas';
 import Stats from 'three/addons/libs/stats.module.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -29,28 +28,20 @@ let clipNames = [
 ];
 let projects = [
   {
-    image: 'textures/ISC2.png',
-    url: 'https://coursera.org/share/28699a690714c18a08dcb99361593262',
-  },
-  {
-    image: 'textures/musika.PNG',
-    url: 'https:musikazw.com/',
-  },
-  {
     image: 'textures/msu-connect.png',
     url: '#',
   },
   {
+    image: 'textures/musika.PNG',
+    url: 'https://musikazw.com/',
+  },
+  {
+    image: 'textures/ISC2.png',
+    url: 'https://coursera.org/share/28699a690714c18a08dcb99361593262',
+  },
+  {
     image: 'textures/Google CyberSecurity Certification.png',
     url: 'https://coursera.org/share/579e46553bb42e0bdf08d14b411acd70',
-  },
-  {
-    image: 'textures/mike.jpeg',
-    url: 'https://gdg.community.dev/gdg-on-campus-midlands-state-university-gweru-zimbabwe/',
-  },
-  {
-    image: 'textures/IMG_1171.JPG',
-    url: '#',
   },
 ];
 let aboutCameraPos = {
@@ -123,7 +114,7 @@ controls.update();
 // LOAD MODEL & ASSET
 // const loadingManager = new THREE.LoadingManager();
 const dracoLoader = new DRACOLoader();
-dracoLoader.setDecoderPath('draco/');
+dracoLoader.setDecoderPath('raco/');
 const gltfLoader = new GLTFLoader();
 gltfLoader.setDRACOLoader(dracoLoader);
 gltfLoader.load(
@@ -245,7 +236,10 @@ gltfLoader.load(
     if (child.name === 'SwitchBoard') {
         lightSwitch = child.children[0];
     }
-    
+
+    scene.add(room.scene);
+    animate();
+  
 
     // add animation
     mixer = new THREE.AnimationMixer(room.scene);
@@ -326,21 +320,21 @@ scene.add(pointLight4);
 // scene.add(pointLightHelper);
 
 // ADD GUI
-//const gui = new dat.GUI();
- //const options = {
-   //lightX: 0,
-   //lightY: 0.08,
-   //lightZ: 0,
- //};
- //gui.add(options, 'lightX').onChange((e) => {
-   //mobileLight.position.setX(e);
- //});
- //gui.add(options, 'lightY').onChange((e) => {
-   //mobileLight.position.setY(e);
- //});
- //gui.add(options, 'lightZ').onChange((e) => {
-  // mobileLight.position.setZ(e);
-//});
+// const gui = new dat.GUI();
+// const options = {
+//   lightX: 0,
+//   lightY: 0.08,
+//   lightZ: 0,
+// };
+// gui.add(options, 'lightX').onChange((e) => {
+//   mobileLight.position.setX(e);
+// });
+// gui.add(options, 'lightY').onChange((e) => {
+//   mobileLight.position.setY(e);
+// });
+// gui.add(options, 'lightZ').onChange((e) => {
+//   mobileLight.position.setZ(e);
+// });
 
 const clock = new THREE.Clock();
 function animate() {
@@ -377,7 +371,7 @@ function loadIntroText() {
       new THREE.MeshPhongMaterial({ color: 0xffffff }),
     ];
     const subTitleGeo = new TextGeometry(
-      'Web Developer / Software Engineer / Security Analyst',
+      'Analyst / Developer / Software Engineer',
       {
         font: font,
         size: 0.018,
@@ -817,50 +811,12 @@ document.addEventListener('mouseup', (e) => {
       .classList.remove('contact-menu__dropdown--open');
   }
 });
-document.addEventListener('DOMContentLoaded', () => {
-  const resumeButton = document.getElementById('.resume-menu');
-  if (resumeButton) {
-      resumeButton.addEventListener('click', () => {
-          const cvUrl = 'https://drive.google.com/file/d/1dRDt_kGYq4Xd6dVTjAceL_TMkmQa5Yw7/view?usp=drive_link';
-          window.open(cvUrl, '_blank');
-      });
-  }
-  const playGameButton = document.querySelector('.play-game-link');
-  if (playGameButton) {
-      playGameButton.addEventListener('click', () => {
-          startGame();
-      });
-  }
-});
 
-function startGame() {
-  const choices = ['Rock', 'Paper', 'Scissors'];
-  const userChoice = prompt('Enter Rock, Paper, or Scissors:');
-  if (!choices.includes(userChoice)) {
-      alert('Invalid choice! Please enter Rock, Paper, or Scissors.');
-      return;
-  }
-
-  const computerChoice = choices[Math.floor(Math.random() * choices.length)];
-  alert(`Computer chose: ${computerChoice}`);
-
-  if (userChoice === computerChoice) {
-      alert('It\'s a tie!');
-  } else if (
-      (userChoice === 'Rock' && computerChoice === 'Scissors') ||
-      (userChoice === 'Paper' && computerChoice === 'Rock') ||
-      (userChoice === 'Scissors' && computerChoice === 'Paper')
-  ) {
-      alert('You win!');
-  } else {
-      alert('You lose!');
-  }
-};
-  
 // update camera, renderer on resize
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
-  })
+  },
+)
